@@ -29,6 +29,9 @@ public class RecursivePractice {
         return count+digitMatch(x/10,y/10);
     }
     public static void writeBinary(int x){
+        if(x<0){
+            throw new IllegalArgumentException("Illegal Input!");
+        }
         if(x==0)
             return;
         writeBinary(x/2);
@@ -47,7 +50,7 @@ public class RecursivePractice {
             SecondMaxIndex = 0;
         }
         int finalSecondIndex=findSecondLargestHelper(arr,MoveIndex,MaxIndex,SecondMaxIndex);
-        return finalSecondIndex;
+        return arr[finalSecondIndex];
     }
 
     private static int findSecondLargestHelper(int[] arr, int index, int MaxIndex,int SecondMaxIndex){
@@ -63,17 +66,18 @@ public class RecursivePractice {
         return findSecondLargestHelper(arr,index+1,MaxIndex,SecondMaxIndex);
     }
     public static double permutation(int n, int r){
-        if(n==1){
-            return 1;
+        if(n<r||n<0||r<0){
+            throw new IllegalArgumentException("Illegal Input!");
         }
-        return n/r*permutaitonHelper(n-1,Math.max(r-1,1));
+       return permutaitonHelper(n,r);
 
     }
     private static double permutaitonHelper(int n,int r){
+
        if(n==1){
            return 1;
        }
-       return n/r*permutaitonHelper(n-1,Math.max(r-1,1));
+       return n*1.0/Math.max((n-r),1)*permutaitonHelper(n-1,r);
     }
 
     public static int maxSum(ArrayList<Integer> list, int limit){
