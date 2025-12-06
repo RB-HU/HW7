@@ -1,3 +1,4 @@
+import java.util.*;
 public class RecursivePractice {
     public  static int countSubstrings(String word, String substring){
         int targetLength=substring.length();
@@ -34,6 +35,75 @@ public class RecursivePractice {
         System.out.print(x%2);
     }
 
+    public static int findSecondLargest(int[] arr) {
+        int MaxIndex;
+        int SecondMaxIndex;
+        int MoveIndex = 0;
+        if (arr[0] > arr[1]) {
+            MaxIndex = 0;
+            SecondMaxIndex = 1;
+        } else {
+            MaxIndex = 1;
+            SecondMaxIndex = 0;
+        }
+        int finalSecondIndex=findSecondLargestHelper(arr,MoveIndex,MaxIndex,SecondMaxIndex);
+        return finalSecondIndex;
+    }
+
+    private static int findSecondLargestHelper(int[] arr, int index, int MaxIndex,int SecondMaxIndex){
+        if(index==arr.length){
+            return SecondMaxIndex;
+        }
+        if(arr[index]<=arr[MaxIndex]&&arr[index]>arr[SecondMaxIndex]){
+            SecondMaxIndex=index;
+        }
+        if(arr[index]>arr[MaxIndex]){
+            MaxIndex=index;
+        }
+        return findSecondLargestHelper(arr,index+1,MaxIndex,SecondMaxIndex);
+    }
+    public static double permutation(int n, int r){
+        if(n==1){
+            return 1;
+        }
+        return n/r*permutaitonHelper(n-1,Math.max(r-1,1));
+
+    }
+    private static double permutaitonHelper(int n,int r){
+       if(n==1){
+           return 1;
+       }
+       return n/r*permutaitonHelper(n-1,Math.max(r-1,1));
+    }
+
+    public static int maxSum(ArrayList<Integer> list, int limit){
+        int index=0;
+        int currentSum=0;
+        int MaxSum=maxSumHelper(list,index,currentSum,limit);
+        return MaxSum;
+    }
+
+    private static int maxSumHelper(ArrayList<Integer> list, int index, int currentSum, int remainingLimit) {
+        if (index >= list.size()) {
+            return currentSum;
+        }
+
+        if (remainingLimit <= 0) {
+            return currentSum;
+        }
+
+        int currentValue = list.get(index);
+
+        int sumWithout = maxSumHelper(list, index + 1, currentSum, remainingLimit);
 
 
+        int sumWith = currentSum;
+        if (currentValue <= remainingLimit) {
+            sumWith = maxSumHelper(list, index + 1,
+                    currentSum + currentValue,
+                    remainingLimit - currentValue);
+        }
+
+        return Math.max(sumWithout, sumWith);
+    }
 }
